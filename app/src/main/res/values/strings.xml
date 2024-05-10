@@ -6,4 +6,6 @@
     <string name="task_name">Task Name</string>
     <string name="description">Description</string>
     <string name="save">Save</string>
+    <string name="placeholder">PlaceHolder</string>
+    <string name="checkbox">CheckBox</string>
 </resources>
