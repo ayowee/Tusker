@@ -7,19 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:layout_width="174dp"
+        android:layout_height="107dp"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="140dp"
+        android:layout_toStartOf="@+id/deleteAllButton"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/logo" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:paddingHorizontal="10dp"
+        android:paddingTop="126dp"
         tools:ignore="ExtraText">
-
-
-        <ImageView
-            android:layout_width="155dp"
-            android:layout_height="114dp"
-            android:layout_gravity="center"
-            android:src="@drawable/logo" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/todoListRecyclerView"
@@ -33,14 +40,28 @@
         android:id="@+id/newTaskButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Task"
         android:backgroundTint="@color/PrimaryDark"
         android:textColor="?colorOnPrimary"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:padding="5dp"
-        android:layout_margin="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
         app:icon="@drawable/add_plus_svgrepo_com"
+        app:iconTint="@color/white"/>
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/deleteAllButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/PrimaryDark"
+        android:textColor="?colorOnPrimary"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:padding="5dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        app:icon="@drawable/delete"
         app:iconTint="@color/white"/>
 
 </RelativeLayout>

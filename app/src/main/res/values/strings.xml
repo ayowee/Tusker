@@ -9,4 +9,5 @@
     <string name="placeholder">PlaceHolder</string>
     <string name="checkbox">CheckBox</string>
     <string name="delete_button">Delete Button</string>
+    <string name="logo">logo</string>
 </resources>
