@@ -7,6 +7,7 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.example.tusker.databinding.FragmentNewTaskSheetBinding
@@ -23,6 +24,11 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val activity = requireActivity()
+
+        val priorityOptions = arrayOf("Low", "Medium", "High")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, priorityOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.prioritySpinner.adapter = adapter
 
         if (taskItem != null) {
             binding.taskTitle.text = "Edit Task"
@@ -70,8 +76,10 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         val name = binding.name.text.toString()
         val description = binding.taskDescription.text.toString()
         val dueTimeString = if (dueTime == null) null else TaskItem.timeFormatter.format(dueTime)
+        val priority = binding.prioritySpinner.selectedItem.toString()
+
         if (taskItem == null) {
-            val newTask = TaskItem(name, description, dueTimeString, null)
+            val newTask = TaskItem(name, description, dueTimeString, null, priority)
             taskViewModel.addTaskItem(newTask)
         } else {
             taskItem!!.name = name
