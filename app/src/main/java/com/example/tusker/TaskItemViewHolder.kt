@@ -31,6 +31,12 @@ class TaskItemViewHolder(
             clickListener.completeTaskItem(taskItem)
         }
 
+        binding.deleteButton.setOnClickListener {
+            // Call the deleteTaskItem method in the clickListener interface
+            clickListener.deleteTaskItem(taskItem)
+        }
+
+
         binding.taskCellContainer.setOnClickListener {
             clickListener.editTaskItem(taskItem)
         }

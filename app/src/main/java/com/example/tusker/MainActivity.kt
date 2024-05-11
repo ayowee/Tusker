@@ -44,6 +44,10 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
         NewTaskSheet(taskItem).show(supportFragmentManager, "EditTaskTag")
     }
 
+    override fun deleteTaskItem(taskItem: TaskItem) {
+        taskViewModel.deleteTaskItem(taskItem)
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun completeTaskItem(taskItem: TaskItem) {
         taskViewModel.setCompleted(taskItem)
