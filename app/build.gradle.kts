@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id ("kotlin-kapt")
 }
 
 android {
@@ -49,4 +50,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Room
+    implementation (libs.room.runtime)
+    kapt (libs.androidx.room.compiler)
+    // Kotlin Extensions and Coroutines support for Room
+    implementation (libs.androidx.room.ktx)
+
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.androidx.activity.ktx)
+    implementation (libs.androidx.fragment.ktx)
+    annotationProcessor (libs.compiler)
+    implementation (libs.androidx.room.runtime.v243)
 }

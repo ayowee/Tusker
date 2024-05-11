@@ -13,13 +13,13 @@ import com.example.tusker.databinding.FragmentNewTaskSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.time.LocalTime
 
+@RequiresApi(Build.VERSION_CODES.O)
 class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentNewTaskSheetBinding
     private lateinit var taskViewModel: TaskViewModel
     private var dueTime: LocalTime? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val activity = requireActivity()
@@ -30,8 +30,8 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
             binding.name.text = editable.newEditable(taskItem!!.name)
             binding.taskDescription.text = editable.newEditable(taskItem!!.description)
 
-            if (taskItem!!.dueTime != null){
-                dueTime = taskItem!!.dueTime!!
+            if (taskItem!!.dueTime() != null){
+                dueTime = taskItem!!.dueTime()!!
                 updateTimeButton()
             }
 
@@ -49,7 +49,6 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun openTimePicker() {
         if (dueTime == null) {
             dueTime = LocalTime.now()
@@ -63,7 +62,6 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         dialog.show()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateTimeButton() {
         binding.timePickerButton.text = String.format("%02d:%02d", dueTime!!.hour, dueTime!!.minute)
     }
@@ -71,11 +69,15 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
     private fun saveAction() {
         val name = binding.name.text.toString()
         val description = binding.taskDescription.text.toString()
+        val dueTimeString = if (dueTime == null) null else TaskItem.timeFormatter.format(dueTime)
         if (taskItem == null) {
-            val newTask = TaskItem(name, description, dueTime, null)
+            val newTask = TaskItem(name, description, dueTimeString, null)
             taskViewModel.addTaskItem(newTask)
         } else {
-            taskViewModel.updateTaskItem(taskItem!!.id, name, description, dueTime)
+            taskItem!!.name = name
+            taskItem!!.description = description
+            taskItem!!.dueTimeString = dueTimeString
+            taskViewModel.updateTaskItem(taskItem!!)
         }
         binding.name.setText("")
         binding.taskDescription.setText("")

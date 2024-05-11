@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".NewTaskSheet"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/rounded_corner_background"
+    android:paddingBottom="20dp">
 
     <TextView
         android:id="@+id/taskTitle"
@@ -12,6 +14,7 @@
         android:layout_height="wrap_content"
         android:text="@string/new_task"
         android:textSize="30sp"
+        android:textColor="@color/black"
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         style="@style/TextAppearance.AppCompat.Title" />
@@ -28,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/task_name"
+            android:background="@color/white"
              />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -44,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/description"
+            android:background="@color/white"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -54,7 +59,7 @@
         android:layout_height="wrap_content"
         android:text="Select Time"
         android:layout_marginHorizontal="20dp"
-        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTint="@color/PrimaryDark"
         android:textColor="?colorOnPrimary"
         style="@style/Widget.MaterialComponents.Button.TextButton" />
 
@@ -65,7 +70,7 @@
         android:layout_height="wrap_content"
         android:text="@string/save"
         android:layout_marginHorizontal="20dp"
-        android:backgroundTint="?attr/colorPrimary"
+        android:backgroundTint="@color/PrimaryDark"
         android:textColor="?colorOnPrimary"
         style="@style/Widget.MaterialComponents.Button.TextButton" />
 
