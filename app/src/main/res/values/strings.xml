@@ -10,4 +10,9 @@
     <string name="checkbox">CheckBox</string>
     <string name="delete_button">Delete Button</string>
     <string name="logo">logo</string>
+    <string-array name="priority_array">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
 </resources>

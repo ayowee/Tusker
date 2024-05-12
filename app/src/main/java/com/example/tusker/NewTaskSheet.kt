@@ -7,6 +7,8 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import com.example.tusker.databinding.FragmentNewTaskSheetBinding
@@ -23,6 +25,19 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val activity = requireActivity()
+
+        val spinner: Spinner = binding.root.findViewById(R.id.prioritySpinner)
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.priority_array,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // Specify the layout to use when the list of choices appears.
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // Apply the adapter to the spinner.
+            spinner.adapter = adapter
+        }
+
 
         if (taskItem != null) {
             binding.taskTitle.text = "Edit Task"
