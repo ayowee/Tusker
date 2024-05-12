@@ -26,6 +26,10 @@ class TaskViewModel(private val repository: TaskItemRepository) : ViewModel() {
         repository.deleteTaskItem(taskItem)
     }
 
+    fun deleteAllTaskItems() = viewModelScope.launch {
+        repository.deleteAllTaskItems()
+    }
+
     fun setCompleted(taskItem: TaskItem) = viewModelScope.launch {
         if (!taskItem.isCompleted())
             taskItem.completedDateString = TaskItem.dateFormatter.format(LocalDate.now())

@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Paint
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tusker.databinding.TaskItemCellBinding
 import java.time.format.DateTimeFormatter
@@ -36,6 +37,12 @@ class TaskItemViewHolder(
             clickListener.deleteTaskItem(taskItem)
         }
 
+        // Set background color based on priority
+        when (taskItem.priority) {
+            "Low" -> binding.root.setBackgroundColor(ContextCompat.getColor(context, R.color.low_priority_color))
+            "Medium" -> binding.root.setBackgroundColor(ContextCompat.getColor(context, R.color.medium_priority_color))
+            "High" -> binding.root.setBackgroundColor(ContextCompat.getColor(context, R.color.high_priority_color))
+        }
 
         binding.taskCellContainer.setOnClickListener {
             clickListener.editTaskItem(taskItem)

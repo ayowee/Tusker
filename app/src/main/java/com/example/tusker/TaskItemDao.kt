@@ -22,4 +22,7 @@ interface TaskItemDao {
 
     @Delete
     suspend fun deleteTaskItem(taskItem: TaskItem)
+
+    @Query("DELETE FROM task_table")
+    suspend fun deleteAllTaskItems()
 }

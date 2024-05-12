@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tusker.databinding.ActivityMainBinding
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MainActivity : AppCompatActivity(), TaskItemClickListener {
@@ -27,6 +28,11 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
             NewTaskSheet(null).show(supportFragmentManager, "NewTaskTag")
         }
 
+        findViewById<ExtendedFloatingActionButton>(R.id.deleteAllButton).setOnClickListener {
+            // Call the method to delete all task items
+            deleteAllTaskItems()
+        }
+
         setRecyclerView()
     }
 
@@ -38,6 +44,12 @@ class MainActivity : AppCompatActivity(), TaskItemClickListener {
                 adapter = TaskItemAdapter(it, mainActivity)
             }
         }
+    }
+
+    private fun deleteAllTaskItems() {
+        // Implement the logic for deleting all task items
+        // Call the method in your ViewModel to delete all task items
+        taskViewModel.deleteAllTaskItems()
     }
 
     override fun editTaskItem(taskItem: TaskItem) {
