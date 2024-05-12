@@ -93,13 +93,16 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment(),
         val name = binding.name.text.toString()
         val description = binding.taskDescription.text.toString()
         val dueTimeString = if (dueTime == null) null else TaskItem.timeFormatter.format(dueTime)
+        val selectedPriority = binding.prioritySpinner.selectedItem.toString()
+
         if (taskItem == null) {
-            val newTask = TaskItem(name, description, dueTimeString, null, priority = "")
+            val newTask = TaskItem(name, description, dueTimeString, null, selectedPriority)
             taskViewModel.addTaskItem(newTask)
         } else {
             taskItem!!.name = name
             taskItem!!.description = description
             taskItem!!.dueTimeString = dueTimeString
+            taskItem!!.priority = selectedPriority
             taskViewModel.updateTaskItem(taskItem!!)
         }
         binding.name.setText("")

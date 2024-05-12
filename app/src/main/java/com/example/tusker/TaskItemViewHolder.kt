@@ -15,7 +15,7 @@ class TaskItemViewHolder(
     private val clickListener: TaskItemClickListener
 ): RecyclerView.ViewHolder(binding.root){
     @RequiresApi(Build.VERSION_CODES.O)
-    val timeFormat = DateTimeFormatter.ofPattern("HH:mm")
+    val timeFormat = DateTimeFormatter.ofPattern("HH:mm")!!
     @RequiresApi(Build.VERSION_CODES.O)
     fun bindTaskItem(taskItem: TaskItem) {
         binding.name.text = taskItem.name

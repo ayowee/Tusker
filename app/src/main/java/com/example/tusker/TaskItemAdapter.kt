@@ -1,7 +1,9 @@
 package com.example.tusker
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tusker.databinding.TaskItemCellBinding
 
@@ -17,7 +19,10 @@ class TaskItemAdapter(
 
     override fun getItemCount(): Int = taskItems.size
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: TaskItemViewHolder, position: Int) {
-        holder.bindTaskItem(taskItems[position])
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            holder.bindTaskItem(taskItems[position])
+        }
     }
 }
