@@ -30,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/task_name"
-            android:background="@color/white" />
+            android:background="@color/white"
+            tools:ignore="VisualLintTextFieldSize" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -46,7 +47,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/description"
-            android:background="@color/white" />
+            android:background="@color/white"
+            tools:ignore="VisualLintTextFieldSize" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,11 +65,12 @@
         android:id="@+id/timePickerButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Time"
+        android:text="@string/select_time"
         android:layout_marginHorizontal="20dp"
         android:backgroundTint="@color/PrimaryDark"
         android:textColor="?colorOnPrimary"
-        style="@style/Widget.MaterialComponents.Button.TextButton" />
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        tools:ignore="VisualLintButtonSize" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/save"
@@ -77,6 +80,9 @@
         android:layout_marginHorizontal="20dp"
         android:backgroundTint="@color/PrimaryDark"
         android:textColor="?colorOnPrimary"
-        style="@style/Widget.MaterialComponents.Button.TextButton" />
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        tools:ignore="VisualLintButtonSize" />
 
+    <include layout="@layout/task_item_cell" android:visibility="gone"/>
 </LinearLayout>
+

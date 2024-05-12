@@ -1,5 +1,6 @@
 package com.example.tusker
 
+import android.annotation.SuppressLint
 import android.app.TimePickerDialog
 import android.os.Build
 import android.os.Bundle
@@ -7,21 +8,28 @@ import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.tusker.databinding.FragmentNewTaskSheetBinding
+import com.example.tusker.databinding.TaskItemCellBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import java.time.LocalTime
 
 @RequiresApi(Build.VERSION_CODES.O)
-class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
+class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment(),
+    AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: FragmentNewTaskSheetBinding
+    private lateinit var taskItemCellBinding: TaskItemCellBinding
+
     private lateinit var taskViewModel: TaskViewModel
     private var dueTime: LocalTime? = null
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val activity = requireActivity()
@@ -32,12 +40,11 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
             R.array.priority_array,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
-            // Specify the layout to use when the list of choices appears.
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            // Apply the adapter to the spinner.
             spinner.adapter = adapter
         }
 
+        spinner.onItemSelectedListener = this
 
         if (taskItem != null) {
             binding.taskTitle.text = "Edit Task"
@@ -77,6 +84,7 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         dialog.show()
     }
 
+    @SuppressLint("DefaultLocale")
     private fun updateTimeButton() {
         binding.timePickerButton.text = String.format("%02d:%02d", dueTime!!.hour, dueTime!!.minute)
     }
@@ -86,7 +94,7 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
         val description = binding.taskDescription.text.toString()
         val dueTimeString = if (dueTime == null) null else TaskItem.timeFormatter.format(dueTime)
         if (taskItem == null) {
-            val newTask = TaskItem(name, description, dueTimeString, null)
+            val newTask = TaskItem(name, description, dueTimeString, null, priority = "")
             taskViewModel.addTaskItem(newTask)
         } else {
             taskItem!!.name = name
@@ -101,7 +109,38 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentNewTaskSheetBinding.inflate(inflater, container, false)
+        taskItemCellBinding = TaskItemCellBinding.inflate(inflater, container, false)
         return binding.root
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        // Handle item selection
+        val selectedPriority = parent?.getItemAtPosition(position) as String
+
+        taskItemCellBinding = TaskItemCellBinding.inflate(layoutInflater)
+        // Access views from task_item_cell.xml through its binding
+        val cellItemLinearMain = taskItemCellBinding.taskCellContainer
+
+        // Update the selected priority in the view model
+        when (selectedPriority) {
+            "Low" -> {
+                val color = ContextCompat.getColor(requireContext(), R.color.low_priority_color)
+                cellItemLinearMain.setBackgroundColor(color)
+            }
+            "Medium" -> {
+                val color = ContextCompat.getColor(requireContext(), R.color.medium_priority_color)
+                cellItemLinearMain.setBackgroundColor(color)
+            }
+            "High" -> {
+                val color = ContextCompat.getColor(requireContext(), R.color.high_priority_color)
+                cellItemLinearMain.setBackgroundColor(color)
+            }
+        }
+    }
+
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+
     }
 
 }

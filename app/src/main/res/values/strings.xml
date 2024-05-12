@@ -10,6 +10,7 @@
     <string name="checkbox">CheckBox</string>
     <string name="delete_button">Delete Button</string>
     <string name="logo">logo</string>
+    <string name="select_time">Select Time</string>
     <string-array name="priority_array">
         <item>Low</item>
         <item>Medium</item>
