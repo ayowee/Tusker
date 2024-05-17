@@ -9,8 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -34,17 +32,16 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment(),
         super.onViewCreated(view, savedInstanceState)
         val activity = requireActivity()
 
-        val spinner: Spinner = binding.root.findViewById(R.id.prioritySpinner)
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.priority_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter = adapter
+        if (taskItem != null) {
+            binding.taskTitle.text = getString(R.string.edit_task)
+            binding.name.setText(taskItem!!.name)
+            binding.taskDescription.setText(taskItem!!.description)
+            when (taskItem!!.priority) {
+                "Low" -> binding.lowPriorityRadio.isChecked = true
+                "Medium" -> binding.mediumPriorityRadio.isChecked = true
+                "High" -> binding.highPriorityRadio.isChecked = true
+            }
         }
-
-        spinner.onItemSelectedListener = this
 
         if (taskItem != null) {
             binding.taskTitle.text = "Edit Task"
@@ -92,19 +89,25 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment(),
     private fun saveAction() {
         val name = binding.name.text.toString()
         val description = binding.taskDescription.text.toString()
-        val dueTimeString = if (dueTime == null) null else TaskItem.timeFormatter.format(dueTime)
-        val selectedPriority = binding.prioritySpinner.selectedItem.toString()
+        val priority = when (binding.priorityRadioGroup.checkedRadioButtonId) {
+            R.id.lowPriorityRadio -> "Low"
+            R.id.mediumPriorityRadio -> "Medium"
+            R.id.highPriorityRadio -> "High"
+            else -> ""
+        }
 
         if (taskItem == null) {
-            val newTask = TaskItem(name, description, dueTimeString, null, selectedPriority)
+            val newTask = TaskItem(name, description, null, false.toString(), priority)
             taskViewModel.addTaskItem(newTask)
         } else {
-            taskItem!!.name = name
-            taskItem!!.description = description
-            taskItem!!.dueTimeString = dueTimeString
-            taskItem!!.priority = selectedPriority
+            taskItem!!.apply {
+                this.name = name
+                this.description = description
+                this.priority = priority
+            }
             taskViewModel.updateTaskItem(taskItem!!)
         }
+
         binding.name.setText("")
         binding.taskDescription.setText("")
         dismiss()

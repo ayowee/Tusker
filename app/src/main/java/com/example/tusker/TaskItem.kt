@@ -21,8 +21,10 @@ class TaskItem (
     @ColumnInfo(name = "priority") var priority: String,
     @PrimaryKey(autoGenerate = true) var id: Int = 0
 ){
-
-    fun completedDate(): LocalDate? = if (completedDateString == null) null else LocalDate.parse(completedDateString, dateFormatter)
+    fun completedDate(): LocalDate? {
+        return if (completedDateString == null || completedDateString == "false") null
+        else LocalDate.parse(completedDateString, dateFormatter)
+    }
     fun dueTime(): LocalTime? = if (dueTimeString == null) null else LocalTime.parse(dueTimeString, timeFormatter)
 
     fun isCompleted() = completedDate() != null

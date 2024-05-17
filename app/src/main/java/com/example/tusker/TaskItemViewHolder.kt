@@ -38,11 +38,14 @@ class TaskItemViewHolder(
         }
 
         // Set background color based on priority
-        when (taskItem.priority) {
-            "Low" -> binding.root.setBackgroundColor(ContextCompat.getColor(context, R.color.low_priority_color))
-            "Medium" -> binding.root.setBackgroundColor(ContextCompat.getColor(context, R.color.medium_priority_color))
-            "High" -> binding.root.setBackgroundColor(ContextCompat.getColor(context, R.color.high_priority_color))
+        val colorRes = when (taskItem.priority) {
+            "Low" -> R.color.low_priority_color
+            "Medium" -> R.color.medium_priority_color
+            "High" -> R.color.high_priority_color
+            else -> R.color.PrimaryLight // Ensure you have a default color
         }
+        binding.taskCellContainer.setCardBackgroundColor(ContextCompat.getColor(context, colorRes))
+
 
         binding.taskCellContainer.setOnClickListener {
             clickListener.editTaskItem(taskItem)
