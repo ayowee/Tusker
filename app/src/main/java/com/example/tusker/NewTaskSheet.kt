@@ -33,21 +33,15 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment(),
         val activity = requireActivity()
 
         if (taskItem != null) {
-            binding.taskTitle.text = getString(R.string.edit_task)
-            binding.name.setText(taskItem!!.name)
-            binding.taskDescription.setText(taskItem!!.description)
+            binding.taskTitle.text = "Edit Task"
+            val editable = Editable.Factory.getInstance()
+            binding.name.text = editable.newEditable(taskItem!!.name)
+            binding.taskDescription.text = editable.newEditable(taskItem!!.description)
             when (taskItem!!.priority) {
                 "Low" -> binding.lowPriorityRadio.isChecked = true
                 "Medium" -> binding.mediumPriorityRadio.isChecked = true
                 "High" -> binding.highPriorityRadio.isChecked = true
             }
-        }
-
-        if (taskItem != null) {
-            binding.taskTitle.text = "Edit Task"
-            val editable = Editable.Factory.getInstance()
-            binding.name.text = editable.newEditable(taskItem!!.name)
-            binding.taskDescription.text = editable.newEditable(taskItem!!.description)
 
             if (taskItem!!.dueTime() != null){
                 dueTime = taskItem!!.dueTime()!!
@@ -95,6 +89,7 @@ class NewTaskSheet(var taskItem: TaskItem?) : BottomSheetDialogFragment(),
             R.id.highPriorityRadio -> "High"
             else -> ""
         }
+        val dueTime = dueTime
 
         if (taskItem == null) {
             val newTask = TaskItem(name, description, null, false.toString(), priority)

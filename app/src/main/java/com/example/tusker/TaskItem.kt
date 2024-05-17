@@ -25,7 +25,10 @@ class TaskItem (
         return if (completedDateString == null || completedDateString == "false") null
         else LocalDate.parse(completedDateString, dateFormatter)
     }
-    fun dueTime(): LocalTime? = if (dueTimeString == null) null else LocalTime.parse(dueTimeString, timeFormatter)
+    fun dueTime(): LocalTime? {
+        return if (dueTimeString == null || dueTimeString == "null") null
+        else LocalTime.parse(dueTimeString, timeFormatter)
+    }
 
     fun isCompleted() = completedDate() != null
     fun imageResource(): Int = if(isCompleted()) R.drawable.checked else R.drawable.unchecked

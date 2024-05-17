@@ -12,6 +12,7 @@
     <string name="logo">logo</string>
     <string name="select_time">Select Time</string>
     <string name="edit_task">Edit Task\n</string>
+    <string name="create_task">Create Task\n</string>
     <string-array name="priority_array">
         <item>Low</item>
         <item>Medium</item>

@@ -6,7 +6,7 @@
     <color name="PrimaryLight">#E8D095</color>
     <color name="PrimaryDark">#FF9800</color>
     <color name="grey">#434543</color>
-    <color name="low_priority_color">#C0E895</color>
+    <color name="low_priority_color">#4CAF50</color>
     <color name="medium_priority_color">#FF9800</color>
     <color name="high_priority_color">#EC273F</color>
 </resources>
